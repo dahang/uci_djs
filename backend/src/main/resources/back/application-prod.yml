@@ -1,0 +1,70 @@
+
+server:
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+  http2:
+    enabled: true
+  port: ${PORT:8080}
+
+database:
+  name: stock-data
+  host: 127.0.0.1
+  port: 5432
+  username: postgres
+  pssword: postgres
+
+spring:
+  application:
+    name: RBC_UCI_DJS
+
+  # R2DBC Driver config
+  r2dbc: 
+    url: r2dbc:postgresql:////${database.host}:${database.port}/${database.name}
+    username: ${username}
+    password: ${database.password}
+#   r2dbc: 
+    # pool.initialSize: 5
+#   r2dbc: 
+    # pool.maxSize: 5
+
+# Liquibase (schema update)
+  # liquibase: 
+  #   change-log: classpath:/db/db.changelog.yaml
+  #   url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
+  #   user: ${database.username}
+  #   password: ${database.password}
+
+# Logging
+logging: 
+  level: 
+    org: 
+      springframework: 
+        data: 
+          r2dbc: debug
+# Database configuration
+
+management:
+  server:
+    port: 9090
+springdoc:
+  version: '@springdoc.version@'
+  show-actuator: true
+  use-management-port: false
+  swagger-ui:
+    enabled: true
+    use-root-path: true
+
+### TEST
+# spring: 
+#   profiles.active=test
+
+# # R2DBC with H2
+# spring: 
+#   r2dbc: 
+#     url: r2dbc:h2:mem:///~/db;MODE=PostgreSQL;
+#     username: ${database.username}
+#     password: ${database.password}
